@@ -6,7 +6,9 @@ export const useWeatherParamsFieldConfig = () => {
       name: "forecastDays",
       label: "Forecast Days",
       type: "number",
-      component: "textField",
+      component: "slider",
+      range: [1, 3],
+      step: 1,
     },
     {
       name: "units",
@@ -22,7 +24,7 @@ export const useWeatherParamsFieldConfig = () => {
   };
 };
 
-const weatherUnitOptions = [
+export const weatherUnitOptions = [
   { value: 1, label: "metrics" },
   { value: 2, label: "imperial" },
 ];

@@ -6,7 +6,13 @@ import { Control, useForm, UseFormSetValue } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWeatherParamsFieldConfig } from "./fieldConfig";
-import { FormSelectField, FormTextField } from "@/components/ui/form";
+import {
+  FormSelectField,
+  FormSliderField,
+  FormTextField,
+} from "@/components/ui/form";
+import { Button } from "@mui/joy";
+import { useWeatherParamsDefaultValues } from "./defaultValues";
 
 export type WeatherParamsFormFields = z.infer<typeof weatherParamsFormSchema>;
 
@@ -14,27 +20,54 @@ export type IControlledFormFieldArr = {
   name: keyof WeatherParamsFormFields;
   label: string;
   type: string;
-  component: "textField" | "textArea" | "select" | "multipleSelect" | "switch";
+  component:
+    | "textField"
+    | "textArea"
+    | "select"
+    | "multipleSelect"
+    | "switch"
+    | "slider";
   endDecorator?: string;
   options?: { value: number; label: string }[];
+  range?: [number, number];
+  step?: number;
 }[];
 
 export const WeatherForecastForm = () => {
   const { weatherParamsFieldArr } = useWeatherParamsFieldConfig();
-  const { control, handleSubmit, formState, setValue, reset, watch } =
-    useForm<WeatherParamsFormFields>({
-      mode: "onBlur",
-      reValidateMode: "onBlur",
-      resolver: zodResolver(weatherParamsFormSchema),
-      // defaultValues:
-      //   useDesignLoadDefaultValues().designLoadEssentialDefaultValues,
-    });
-
-  return renderControlledFormInputFields({
-    fields: weatherParamsFieldArr,
-    formSetValue: setValue,
-    control: control,
+  const { control, handleSubmit, setValue } = useForm<WeatherParamsFormFields>({
+    mode: "onBlur",
+    reValidateMode: "onBlur",
+    resolver: zodResolver(weatherParamsFormSchema),
+    defaultValues: useWeatherParamsDefaultValues().weatherParamsDefaultValues,
   });
+
+  const onSubmit = (data: WeatherParamsFormFields) => {
+    console.log(data);
+  };
+
+  return (
+    <>
+      {renderControlledFormInputFields({
+        fields: weatherParamsFieldArr,
+        formSetValue: setValue,
+        control: control,
+      })}
+      <Button
+        variant="outlined"
+        color="primary"
+        sx={{
+          "--variant-borderWidth": "2px",
+          borderRadius: 40,
+          borderColor: "primary.500",
+          mx: "auto",
+        }}
+        onClick={handleSubmit(onSubmit)}
+      >
+        Go
+      </Button>
+    </>
+  );
 };
 
 const renderControlledFormInputFields = ({
@@ -79,6 +112,18 @@ const renderControlledFormInputFields = ({
             key={field.name}
             label={field.label}
             fieldContainerStyle={inputFieldCommonStyle}
+          />
+        );
+      case "slider":
+        return (
+          <FormSliderField
+            name={field.name}
+            control={control}
+            key={field.name}
+            label={field.label}
+            min={field.range![0]}
+            max={field.range![1]}
+            step={field.step}
           />
         );
       default:

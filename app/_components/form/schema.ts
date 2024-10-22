@@ -10,5 +10,5 @@ export const weatherParamsFormSchema = z.object({
     .number()
     .min(0, "Please enter a greater number")
     .max(99999, "Please enter a lower number"),
-  units: z.coerce.string(),
+  units: selectOptionSchema,
 });

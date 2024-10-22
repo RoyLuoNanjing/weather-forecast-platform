@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, CardContent, CardOverflow } from "@mui/joy";
+import { Card, CardContent, CardOverflow } from "@mui/joy";
 import { WeatherForecastForm } from "./_components/form";
 
 export default function Home() {
@@ -35,22 +35,10 @@ export default function Home() {
             px: "var(--Card-padding)",
           }}
         >
-          <WeatherForecastForm />
+          <CardContent>Form</CardContent>
         </CardOverflow>
         <CardContent sx={{ gap: 1.5, minWidth: 200 }}>
-          <CardContent>Form</CardContent>
-          <Button
-            variant="outlined"
-            color="primary"
-            sx={{
-              "--variant-borderWidth": "2px",
-              borderRadius: 40,
-              borderColor: "primary.500",
-              mx: "auto",
-            }}
-          >
-            Go
-          </Button>
+          <WeatherForecastForm />
         </CardContent>
       </Card>
     </div>
