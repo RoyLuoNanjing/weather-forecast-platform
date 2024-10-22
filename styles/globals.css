@@ -1,0 +1,61 @@
+:root {
+	--max-width: 1200px;
+	background-color: #fffefd;
+	/* background: -moz-linear-gradient(top, #fef5ee 0px, #ffffff 400px, #ffffff 100%)
+		no-repeat;
+	background: -webkit-linear-gradient(
+			top,
+			#fef5ee 0px,
+			#ffffff 400px,
+			#ffffff 100%
+		)
+		no-repeat; */
+	min-height: 100vh;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+	}
+}
+
+html,
+body {
+	max-width: 100vw;
+	/* overflow-x: hidden; */
+	margin: 0;
+
+	padding: 0;
+	overflow: inherit;
+}
+
+/* based on https://timonweb.com/css/how-replace-line-break-tags-br-spaces-css/ */
+#addressResult br {
+	content: "";
+}
+#addressResult br:after {
+	content: ", ";
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		color-scheme: dark;
+	}
+}
+
+/* hide number input arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}
