@@ -1,15 +1,9 @@
-import { IWeatherSources } from "@/types";
 import { WeatherParamsFormFields } from ".";
 import { weatherUnitOptions } from "./fieldConfig";
-import { weatherSourcesConfigMap } from "@/app/lib/config";
 
-interface IProps {
-  selectedWeatherSource: IWeatherSources;
-}
-export const useWeatherParamsDefaultValues = (props: IProps) => {
-  const { selectedWeatherSource } = props;
+export const useWeatherParamsDefaultValues = () => {
   const weatherParamsDefaultValues: WeatherParamsFormFields = {
-    forecastDays: weatherSourcesConfigMap[selectedWeatherSource].forecastDays,
+    forecastDays: 1,
     units: weatherUnitOptions[0],
   };
 

@@ -14,6 +14,7 @@ import {
 import { Button } from "@mui/joy";
 import { useWeatherParamsDefaultValues } from "./defaultValues";
 import { IWeatherSources } from "@/types";
+import { useEffect } from "react";
 
 export type WeatherParamsFormFields = z.infer<typeof weatherParamsFormSchema>;
 
@@ -40,17 +41,21 @@ interface IProps {
 
 export const WeatherForecastForm = (props: IProps) => {
   const { selectedWeatherSource } = props;
-
   const { weatherParamsFieldArr } = useWeatherParamsFieldConfig({
     selectedWeatherSource,
   });
-  const { control, handleSubmit, setValue } = useForm<WeatherParamsFormFields>({
-    mode: "onBlur",
-    reValidateMode: "onBlur",
-    resolver: zodResolver(weatherParamsFormSchema),
-    defaultValues: useWeatherParamsDefaultValues({ selectedWeatherSource })
-      .weatherParamsDefaultValues,
-  });
+  const { control, handleSubmit, setValue, reset } =
+    useForm<WeatherParamsFormFields>({
+      mode: "onBlur",
+      reValidateMode: "onBlur",
+      resolver: zodResolver(weatherParamsFormSchema),
+      defaultValues: useWeatherParamsDefaultValues().weatherParamsDefaultValues,
+    });
+
+  //make sure the values in the form are reset
+  useEffect(() => {
+    reset();
+  }, [reset, selectedWeatherSource]);
 
   const onSubmit = (data: WeatherParamsFormFields) => {
     console.log(data);
