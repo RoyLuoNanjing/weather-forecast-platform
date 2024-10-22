@@ -13,7 +13,6 @@ export const WeatherSources = (props: IProps) => {
   const { setSelectedValue } = props;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
     setSelectedValue(event.target.value as IWeatherSources);
   };
 

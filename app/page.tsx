@@ -48,7 +48,7 @@ export default function Home() {
         </CardOverflow>
         <CardContent sx={{ gap: 1.5, minWidth: 200 }}>
           <WeatherSources setSelectedValue={setSelectedWeatherSource} />
-          <WeatherForecastForm />
+          <WeatherForecastForm selectedWeatherSource={selectedWeatherSource} />
         </CardContent>
       </Card>
     </div>

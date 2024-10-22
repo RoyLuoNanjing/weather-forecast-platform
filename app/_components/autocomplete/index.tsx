@@ -1,6 +1,5 @@
 import { googleMapApiKey, libraries } from "@/app/lib/constants";
 import { joyTheme } from "@/app/lib/theme";
-import { inputFieldCommonStyle } from "@/styles/common";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormControl, FormLabel, IconButton, Input } from "@mui/joy";

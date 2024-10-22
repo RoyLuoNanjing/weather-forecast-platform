@@ -1,13 +1,19 @@
+import { IWeatherSources } from "@/types";
 import { IControlledFormFieldArr } from ".";
+import { weatherSourcesConfigMap } from "@/app/lib/config";
 
-export const useWeatherParamsFieldConfig = () => {
+interface IProps {
+  selectedWeatherSource: IWeatherSources;
+}
+export const useWeatherParamsFieldConfig = (props: IProps) => {
+  const { selectedWeatherSource } = props;
   const weatherParamsFieldArr: IControlledFormFieldArr = [
     {
       name: "forecastDays",
       label: "Forecast Days",
       type: "number",
       component: "slider",
-      range: [1, 3],
+      range: [1, weatherSourcesConfigMap[selectedWeatherSource].forecastDays],
       step: 1,
     },
     {

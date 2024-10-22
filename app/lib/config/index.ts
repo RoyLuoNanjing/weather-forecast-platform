@@ -11,7 +11,7 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
   {
     name: "tomorrow",
     label: "Tomorrow",
-    forecastDays: 3,
+    forecastDays: 2,
   },
   {
     name: "weatherApi",
@@ -21,6 +21,14 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
   {
     name: "openMeteo",
     label: "Open Meteo",
-    forecastDays: 3,
+    forecastDays: 7,
   },
 ];
+
+export const weatherSourcesConfigMap = weatherSourcesConfigList.reduce(
+  (acc, { name, ...rest }) => {
+    acc[name] = { name, ...rest };
+    return acc;
+  },
+  {} as Record<string, WeatherSourceConfig>
+);

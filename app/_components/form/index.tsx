@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@mui/joy";
 import { useWeatherParamsDefaultValues } from "./defaultValues";
+import { IWeatherSources } from "@/types";
 
 export type WeatherParamsFormFields = z.infer<typeof weatherParamsFormSchema>;
 
@@ -33,13 +34,22 @@ export type IControlledFormFieldArr = {
   step?: number;
 }[];
 
-export const WeatherForecastForm = () => {
-  const { weatherParamsFieldArr } = useWeatherParamsFieldConfig();
+interface IProps {
+  selectedWeatherSource: IWeatherSources;
+}
+
+export const WeatherForecastForm = (props: IProps) => {
+  const { selectedWeatherSource } = props;
+
+  const { weatherParamsFieldArr } = useWeatherParamsFieldConfig({
+    selectedWeatherSource,
+  });
   const { control, handleSubmit, setValue } = useForm<WeatherParamsFormFields>({
     mode: "onBlur",
     reValidateMode: "onBlur",
     resolver: zodResolver(weatherParamsFormSchema),
-    defaultValues: useWeatherParamsDefaultValues().weatherParamsDefaultValues,
+    defaultValues: useWeatherParamsDefaultValues({ selectedWeatherSource })
+      .weatherParamsDefaultValues,
   });
 
   const onSubmit = (data: WeatherParamsFormFields) => {
