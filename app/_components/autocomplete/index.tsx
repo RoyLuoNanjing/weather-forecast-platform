@@ -1,4 +1,4 @@
-import { googleMapApiKey } from "@/app/lib/constants";
+import { googleMapApiKey, libraries } from "@/app/lib/constants";
 import { joyTheme } from "@/app/lib/theme";
 import { inputFieldCommonStyle } from "@/styles/common";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
@@ -9,12 +9,10 @@ import {
   useLoadScript,
   GoogleMap,
   Marker,
-  Libraries,
 } from "@react-google-maps/api";
 import { useState } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 
-const libraries = ["places"] as Libraries;
 const mapContainerStyle = {
   width: "100%",
   height: "400px",
