@@ -5,6 +5,7 @@ import { WeatherSources } from "./_components/weatherSources";
 import { useState } from "react";
 import { weatherSourcesConfigList } from "./lib/config";
 import { IWeatherSources } from "@/types";
+import { MapWithAutocomplete } from "./_components/autocomplete";
 
 export default function Home() {
   const [selectedWeatherSource, setSelectedWeatherSource] =
@@ -25,7 +26,7 @@ export default function Home() {
         sx={{
           textAlign: "center",
           maxWidth: "100%",
-          width: 800,
+          width: 1000,
           resize: "horizontal",
           overflow: "auto",
         }}
@@ -41,7 +42,9 @@ export default function Home() {
             px: "var(--Card-padding)",
           }}
         >
-          <CardContent>Form</CardContent>
+          <CardContent>
+            <MapWithAutocomplete />
+          </CardContent>
         </CardOverflow>
         <CardContent sx={{ gap: 1.5, minWidth: 200 }}>
           <WeatherSources setSelectedValue={setSelectedWeatherSource} />
