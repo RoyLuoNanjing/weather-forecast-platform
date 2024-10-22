@@ -73,8 +73,7 @@ export const WeatherSources = (props: IProps) => {
               />
             }
           />
-          {source.label}
-          <FormLabel htmlFor={source.name}>{source.name}</FormLabel>
+          <FormLabel htmlFor={source.name}>{source.label}</FormLabel>
         </Sheet>
       ))}
     </RadioGroup>
