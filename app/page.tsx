@@ -1,8 +1,14 @@
 "use client";
 import { Card, CardContent, CardOverflow } from "@mui/joy";
 import { WeatherForecastForm } from "./_components/form";
+import { WeatherSources } from "./_components/weatherSources";
+import { useState } from "react";
+import { weatherSourcesConfigList } from "./lib/config";
+import { IWeatherSources } from "@/types";
 
 export default function Home() {
+  const [selectedWeatherSource, setSelectedWeatherSource] =
+    useState<IWeatherSources>(weatherSourcesConfigList[0].name);
   return (
     <div
       style={{
@@ -19,7 +25,7 @@ export default function Home() {
         sx={{
           textAlign: "center",
           maxWidth: "100%",
-          width: 500,
+          width: 800,
           resize: "horizontal",
           overflow: "auto",
         }}
@@ -38,6 +44,7 @@ export default function Home() {
           <CardContent>Form</CardContent>
         </CardOverflow>
         <CardContent sx={{ gap: 1.5, minWidth: 200 }}>
+          <WeatherSources setSelectedValue={setSelectedWeatherSource} />
           <WeatherForecastForm />
         </CardContent>
       </Card>
