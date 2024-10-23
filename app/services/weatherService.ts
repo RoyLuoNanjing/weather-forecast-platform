@@ -8,7 +8,7 @@ export async function getWeatherForecastData(
 ) {
   const apiUrl = weatherSourcesConfigMap[source].apiUrl;
 
-  const formattedParams = selectedApiAdapter(source, data);
+  const customizedParams = selectedApiAdapter(source, data);
 
   //Different web has different names for their key in the header, thus we need to customized it
   const customizedHeaders: Record<string, string> = {
@@ -21,7 +21,7 @@ export async function getWeatherForecastData(
 
   try {
     const response = await fetch(
-      `${apiUrl}?${new URLSearchParams(formattedParams)}`,
+      `${apiUrl}?${new URLSearchParams(customizedParams)}`,
       {
         method: "GET",
         headers: customizedHeaders,
