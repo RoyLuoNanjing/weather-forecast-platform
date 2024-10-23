@@ -39,7 +39,7 @@ function tomorrowAdapter(params: ITomorrowAdapterParams) {
 
 function weatherApiAdapter(params: IEssentialAdapterParams) {
   return {
-    q: params.coordinates.toString(),
+    q: params.coordinates[0] + "," + params.coordinates[1],
     days: params.forecastDays.toString(),
   };
 }
