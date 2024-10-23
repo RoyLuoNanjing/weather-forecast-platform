@@ -14,6 +14,8 @@ export async function appendToGoogleSheet() {
     ],
   });
 
+  console.log(auth.getCredentials());
+
   const drive = google.drive({ version: "v3", auth });
   const sheets = google.sheets({ version: "v4", auth });
 
