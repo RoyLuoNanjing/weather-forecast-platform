@@ -9,7 +9,6 @@ export async function getWeatherForecastDataController(
   const weatherSource = data.get("source");
 
   data.delete("source"); // we don't need this to be sent to api
-  console.log(weatherSource);
   const apiUrl = weatherSourcesConfigMap[weatherSource].apiUrl;
 
   const paramsForWeatherApi = data;
@@ -29,7 +28,6 @@ export async function getWeatherForecastDataController(
     });
 
     const data = await response.json();
-
     return NextResponse.json(
       { body: data },
       {
