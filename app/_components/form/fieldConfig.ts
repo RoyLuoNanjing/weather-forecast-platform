@@ -31,6 +31,6 @@ export const useWeatherParamsFieldConfig = (props: IProps) => {
 };
 
 export const weatherUnitOptions = [
-  { value: 1, label: "metrics" },
-  { value: 2, label: "imperial" },
+  { value: 1, label: "celsius" },
+  { value: 2, label: "fahrenheit" },
 ];
