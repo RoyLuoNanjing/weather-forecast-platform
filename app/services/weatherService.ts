@@ -2,7 +2,10 @@ import { IWeatherSources } from "@/types";
 import { weatherSourcesConfigMap } from "../lib/config";
 import { selectedApiAdapter } from "./adapters";
 
-export async function getWeatherData(source: IWeatherSources, data: any) {
+export async function getWeatherForecastData(
+  source: IWeatherSources,
+  data: any
+) {
   const apiUrl = weatherSourcesConfigMap[source].apiUrl;
 
   const formattedParams = selectedApiAdapter(source, data);
