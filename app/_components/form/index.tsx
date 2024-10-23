@@ -38,10 +38,11 @@ export type IControlledFormFieldArr = {
 
 interface IProps {
   selectedWeatherSource: IWeatherSources;
+  selectedPlace: google.maps.places.PlaceResult | null;
 }
 
 export const WeatherForecastForm = (props: IProps) => {
-  const { selectedWeatherSource } = props;
+  const { selectedWeatherSource, selectedPlace } = props;
   const { weatherParamsFieldArr } = useWeatherParamsFieldConfig({
     selectedWeatherSource,
   });
@@ -59,11 +60,16 @@ export const WeatherForecastForm = (props: IProps) => {
   }, [reset, selectedWeatherSource]);
 
   const onSubmit = async (data: WeatherParamsFormFields) => {
-    const res = await getWeatherForecastData("weatherApi", {
-      coordinates: [42.3478, -71.0466],
-      timeSteps: 1,
-      forecastDays: 3,
-      units: "celsius",
+    const coordinates = [
+      /* keep this for the demo in case google map stops working in China */
+      selectedPlace?.geometry?.location?.lat() || 42.3478,
+      selectedPlace?.geometry?.location?.lng() || -71.0466,
+    ];
+    const res = await getWeatherForecastData(selectedWeatherSource, {
+      coordinates: coordinates,
+      timeSteps: null,
+      forecastDays: data.forecastDays,
+      units: data.units,
     });
 
     console.log(res);

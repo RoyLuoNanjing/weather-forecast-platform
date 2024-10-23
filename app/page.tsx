@@ -10,6 +10,9 @@ import { MapWithAutocomplete } from "./_components/autocomplete";
 export default function Home() {
   const [selectedWeatherSource, setSelectedWeatherSource] =
     useState<IWeatherSources>(weatherSourcesConfigList[0].name);
+
+  const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.places.PlaceResult | null>(null);
   return (
     <div
       style={{
@@ -43,12 +46,18 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <MapWithAutocomplete />
+            <MapWithAutocomplete
+              selectedPlace={selectedPlace}
+              setSelectedPlace={setSelectedPlace}
+            />
           </CardContent>
         </CardOverflow>
         <CardContent sx={{ gap: 1.5, minWidth: 200 }}>
           <WeatherSources setSelectedValue={setSelectedWeatherSource} />
-          <WeatherForecastForm selectedWeatherSource={selectedWeatherSource} />
+          <WeatherForecastForm
+            selectedWeatherSource={selectedWeatherSource}
+            selectedPlace={selectedPlace}
+          />
         </CardContent>
       </Card>
     </div>

@@ -9,7 +9,7 @@ import {
   GoogleMap,
   Marker,
 } from "@react-google-maps/api";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 
 const mapContainerStyle = {
@@ -21,7 +21,15 @@ const center = {
   lng: -122.0841,
 };
 
-export const MapWithAutocomplete = () => {
+interface IProps {
+  selectedPlace: google.maps.places.PlaceResult | null;
+  setSelectedPlace: Dispatch<
+    SetStateAction<google.maps.places.PlaceResult | null>
+  >;
+}
+
+export const MapWithAutocomplete = (props: IProps) => {
+  const { selectedPlace, setSelectedPlace } = props;
   const [autocomplete, setAutocomplete] =
     useState<google.maps.places.Autocomplete | null>(null);
 
@@ -33,8 +41,6 @@ export const MapWithAutocomplete = () => {
   const [searchResult, setSearchResult] =
     useState<google.maps.places.Autocomplete | null>();
 
-  const [selectedPlace, setSelectedPlace] =
-    useState<google.maps.places.PlaceResult | null>(null);
   const [mapCenter, setMapCenter] = useState(center);
 
   const {
