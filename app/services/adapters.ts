@@ -1,17 +1,45 @@
+import { IWeatherSources } from "@/types";
+import { weatherSourcesConfigMap } from "../lib/config";
+
 interface WeatherParams {
   location: string;
   days?: number;
 }
 
-export function tomorrowAdapter(params: WeatherParams) {
-  // tomorrow 预报系统的参数适配
+export function selectedApiAdapter(source: IWeatherSources, data: any) {
+  switch (source) {
+    case "tomorrow":
+      return tomorrowAdapter(data);
+    case "weatherApi":
+      return weatherApiAdapter(data);
+    default:
+      return openMeteoAdapter(data);
+  }
+}
+
+interface ITomorrowAdapterParams {
+  coordinates: [number, number];
+  timeSteps: number | null;
+  fields: string[];
+  forecastDays: number;
+  units: string;
+}
+function tomorrowAdapter(params: ITomorrowAdapterParams) {
+  const source = "tomorrow";
+  const fields = weatherSourcesConfigMap[source].options?.map(
+    (option: any) => Object.values(option)[0]
+  );
+
   return {
-    query: params.location,
-    forecast_days: params.days || 2, // 设置默认天数为2
+    location: params.coordinates.toString(), //need to convert the coordinates to string
+    timesteps: params.timeSteps + "h",
+    fields: fields?.toString() || "",
+    endTime: `nowPlus${params.forecastDays}d`,
+    units: params.units,
   };
 }
 
-export function weatherApiAdapter(params: WeatherParams) {
+function weatherApiAdapter(params: WeatherParams) {
   // weatherApi 预报系统的参数适配
   return {
     city: params.location,
@@ -19,7 +47,7 @@ export function weatherApiAdapter(params: WeatherParams) {
   };
 }
 
-export function openMeteoAdapter(params: WeatherParams) {
+function openMeteoAdapter(params: WeatherParams) {
   // openMeteo 预报系统的参数适配
   return {
     area: params.location,
