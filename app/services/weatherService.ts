@@ -1,30 +1,22 @@
 import { IWeatherSources } from "@/types";
-import { weatherSourcesConfigMap } from "../lib/config";
 import { selectedApiAdapter } from "./adapters";
 
-export async function getWeatherForecastData(
+export async function getWeatherForecastDataRequest(
   source: IWeatherSources,
   data: any
 ) {
-  const apiUrl = weatherSourcesConfigMap[source].apiUrl;
-
   const customizedParams = selectedApiAdapter(source, data);
-
-  //Different web has different names for their key in the header, thus we need to customized it
-  const customizedHeaders: Record<string, string> = {
-    "Content-Type": "application/json",
+  const finalParams = {
+    ...customizedParams,
+    source: source,
   };
-  const apiKey = weatherSourcesConfigMap[source].apiKey;
-  if (apiKey) {
-    customizedHeaders[apiKey.name] = apiKey.key;
-  }
 
   try {
     const response = await fetch(
-      `${apiUrl}?${new URLSearchParams(customizedParams)}`,
+      `/api/v1/weather?${new URLSearchParams(finalParams)}`,
       {
         method: "GET",
-        headers: customizedHeaders,
+        headers: { "Content-Type": "application/json" },
       }
     );
 
@@ -32,7 +24,8 @@ export async function getWeatherForecastData(
       throw new Error(`Failed to fetch weather data: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching weather data:", error);
     throw error;

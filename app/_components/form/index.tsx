@@ -15,7 +15,7 @@ import { Button } from "@mui/joy";
 import { useWeatherParamsDefaultValues } from "./defaultValues";
 import { IWeatherSources } from "@/types";
 import { useEffect } from "react";
-import { getWeatherForecastData } from "@/app/services/weatherService";
+import { getWeatherForecastDataRequest } from "@/app/services/weatherService";
 
 export type WeatherParamsFormFields = z.infer<typeof weatherParamsFormSchema>;
 
@@ -65,7 +65,7 @@ export const WeatherForecastForm = (props: IProps) => {
       selectedPlace?.geometry?.location?.lat() || 42.3478,
       selectedPlace?.geometry?.location?.lng() || -71.0466,
     ];
-    const res = await getWeatherForecastData(selectedWeatherSource, {
+    const res = await getWeatherForecastDataRequest(selectedWeatherSource, {
       coordinates: coordinates,
       timeSteps: null,
       forecastDays: data.forecastDays,
