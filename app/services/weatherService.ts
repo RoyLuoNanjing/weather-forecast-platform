@@ -1,35 +1,29 @@
-import {
-  tomorrowAdapter,
-  weatherApiAdapter,
-  openMeteoAdapter,
-} from "./adapters";
+import { IWeatherSources } from "@/types";
+import { weatherSourcesConfigMap } from "../lib/config";
+import { selectedApiAdapter } from "./adapters";
 
-export async function getWeatherData(system: string, params: any) {
-  let apiUrl = "";
-  let formattedParams = {};
+export async function getWeatherData(source: IWeatherSources, data: any) {
+  const apiUrl = weatherSourcesConfigMap[source].apiUrl;
 
-  // 根据不同的天气预报系统选择不同的参数适配器
-  switch (system) {
-    case "tomorrow":
-      apiUrl = "https://api.tomorrow.io/weather";
-      formattedParams = tomorrowAdapter(params);
-      break;
-    case "weatherApi":
-      apiUrl = "https://api.weatherapi.com/v1";
-      formattedParams = weatherApiAdapter(params);
-      break;
-    case "openMeteo":
-      apiUrl = "https://api.open-meteo.com";
-      formattedParams = openMeteoAdapter(params);
-      break;
-    default:
-      throw new Error("Unknown weather system");
+  const formattedParams = selectedApiAdapter(source, data);
+
+  //Different web has different names for their key in the header, thus we need to customized it
+  const customizedHeaders: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  const apiKey = weatherSourcesConfigMap[source].apiKey;
+  if (apiKey) {
+    customizedHeaders[apiKey.name] = apiKey.key;
   }
 
-  // 发出请求
   const response = await fetch(
-    `${apiUrl}?${new URLSearchParams(formattedParams)}`
+    `${apiUrl}?${new URLSearchParams(formattedParams)}`,
+    {
+      method: "GET",
+      headers: customizedHeaders,
+    }
   );
+
   if (!response.ok) {
     throw new Error(`Failed to fetch weather data: ${response.status}`);
   }
