@@ -4,7 +4,7 @@ import { tomorrowWeatherApiKey, weatherApiKey } from "../constants";
 type WeatherSourceConfig = {
   name: IWeatherSources;
   label: string;
-  forecastDays: number;
+  maxForecastDays: number;
   apiUrl: string;
   apiKey: { name: string; key: string } | null;
   timeSteps?: number | string;
@@ -15,7 +15,7 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
   {
     name: "tomorrow",
     label: "Tomorrow",
-    forecastDays: 2,
+    maxForecastDays: 2,
     apiUrl: "https://api.tomorrow.io/v4/timelines",
     apiKey: { name: "apiKey", key: tomorrowWeatherApiKey },
     timeSteps: "1h",
@@ -24,14 +24,14 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
   {
     name: "weatherApi",
     label: "Weather Api",
-    forecastDays: 3,
+    maxForecastDays: 3,
     apiUrl: "http://api.weatherapi.com/v1/forecast.json",
     apiKey: { name: "key", key: weatherApiKey },
   },
   {
     name: "openMeteo",
     label: "Open Meteo",
-    forecastDays: 7,
+    maxForecastDays: 7,
     apiUrl: "https://api.open-meteo.com/v1/forecast",
     apiKey: null,
     options: [

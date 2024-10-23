@@ -29,9 +29,11 @@
     "fontawesome",
     "fortawesome",
     "healthcheck",
+    "Meteo",
     "neondatabase",
     "nextjs",
     "organisation",
     "Organisations",
+    "timesteps"
   ]
 }

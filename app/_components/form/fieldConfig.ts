@@ -7,18 +7,25 @@ interface IProps {
 }
 export const useWeatherParamsFieldConfig = (props: IProps) => {
   const { selectedWeatherSource } = props;
+
+  //weather api does not support one day forecast
+  const defaultMinForecastDays = selectedWeatherSource === "weatherApi" ? 2 : 1;
+
   const weatherParamsFieldArr: IControlledFormFieldArr = [
     {
       name: "forecastDays",
       label: "Forecast Days",
       type: "number",
       component: "slider",
-      range: [1, weatherSourcesConfigMap[selectedWeatherSource].forecastDays],
+      range: [
+        defaultMinForecastDays,
+        weatherSourcesConfigMap[selectedWeatherSource].maxForecastDays,
+      ],
       step: 1,
     },
     {
       name: "units",
-      label: "units",
+      label: "Units",
       type: "string",
       component: "select",
       options: weatherUnitOptions,
