@@ -53,7 +53,6 @@ export const MapWithAutocomplete = () => {
     if (autocomplete !== null) {
       const place = autocomplete.getPlace();
       if (place.geometry) {
-        console.log(place);
         setSelectedPlace(place);
         setMapCenter({
           lat: place.geometry.location?.lat() || 0,
