@@ -19,17 +19,22 @@ export async function getWeatherForecastData(
     customizedHeaders[apiKey.name] = apiKey.key;
   }
 
-  const response = await fetch(
-    `${apiUrl}?${new URLSearchParams(formattedParams)}`,
-    {
-      method: "GET",
-      headers: customizedHeaders,
+  try {
+    const response = await fetch(
+      `${apiUrl}?${new URLSearchParams(formattedParams)}`,
+      {
+        method: "GET",
+        headers: customizedHeaders,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch weather data: ${response.status}`);
     }
-  );
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch weather data: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    throw error;
   }
-
-  return await response.json();
 }
