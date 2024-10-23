@@ -71,7 +71,6 @@ export const WeatherForecastForm = (props: IProps) => {
       forecastDays: data.forecastDays,
       units: data.units,
     });
-
     console.log(res);
   };
 

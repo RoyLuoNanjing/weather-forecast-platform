@@ -1,5 +1,6 @@
 import { weatherSourcesConfigMap } from "@/app/lib/config";
 import { NextRequest, NextResponse } from "next/server";
+import { appendToGoogleSheet } from "./googleSheetService";
 
 export async function getWeatherForecastDataController(
   req: NextRequest,
@@ -20,6 +21,8 @@ export async function getWeatherForecastDataController(
   if (apiKey) {
     customizedHeaders[apiKey.name] = apiKey.key;
   }
+
+  await appendToGoogleSheet();
 
   try {
     const response = await fetch(`${apiUrl}?${paramsForWeatherApi}`, {

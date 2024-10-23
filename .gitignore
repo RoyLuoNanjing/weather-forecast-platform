@@ -20,6 +20,9 @@
 # production
 /build
 
+# google sheet credentials
+google-sheet-credentials.json
+
 # misc
 .DS_Store
 *.pem

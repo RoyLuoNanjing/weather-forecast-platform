@@ -13,3 +13,8 @@ export const libraries = ["places"] as Libraries;
 export const appClientBaseUrl = {
   local: "http://localhost:3001",
 };
+
+export const googleSheetApiCredentials = {
+  clientEmail: process.env.NEXT_PUBLIC_GOOGLE_SHEET_CLIENT_EMAIL,
+  privateKey: process.env.NEXT_PUBLIC_GOOGLE_SHEET_PRIVATE_KEY,
+};
