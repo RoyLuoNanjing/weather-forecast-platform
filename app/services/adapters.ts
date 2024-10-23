@@ -30,7 +30,7 @@ function tomorrowAdapter(params: ITomorrowAdapterParams) {
 
   return {
     location: params.coordinates.toString(),
-    timesteps: params.timeSteps + "h",
+    timesteps: params.timeSteps ? params.timeSteps + "h" : "",
     fields: fields?.toString() || "",
     endTime: `nowPlus${params.forecastDays}d`,
     units: params.units === "celsius" ? "metric" : "imperial",
@@ -39,7 +39,7 @@ function tomorrowAdapter(params: ITomorrowAdapterParams) {
 
 function weatherApiAdapter(params: IEssentialAdapterParams) {
   return {
-    q: params.coordinates[0] + "," + params.coordinates[1],
+    q: params.coordinates.toString(),
     days: params.forecastDays.toString(),
   };
 }
