@@ -18,3 +18,5 @@ export const googleSheetApiCredentials = {
   clientEmail: process.env.NEXT_PUBLIC_GOOGLE_SHEET_CLIENT_EMAIL,
   privateKey: process.env.NEXT_PUBLIC_GOOGLE_SHEET_PRIVATE_KEY,
 };
+
+export const googleSheetBaseUrl = "https://docs.google.com/spreadsheets/d/";

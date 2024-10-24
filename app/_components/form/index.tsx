@@ -11,11 +11,12 @@ import {
   FormSliderField,
   FormTextField,
 } from "@/components/ui/form";
-import { Button } from "@mui/joy";
+import { Box, Button } from "@mui/joy";
 import { useWeatherParamsDefaultValues } from "./defaultValues";
 import { IWeatherSources } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getWeatherForecastDataRequest } from "@/app/services/weatherService";
+import { googleSheetBaseUrl } from "@/app/lib/constants";
 
 export type WeatherParamsFormFields = z.infer<typeof weatherParamsFormSchema>;
 
@@ -43,6 +44,8 @@ interface IProps {
 
 export const WeatherForecastForm = (props: IProps) => {
   const { selectedWeatherSource, selectedPlace } = props;
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+  const [googleSheetId, setGoogleSheetId] = useState<string | null>(null);
   const { weatherParamsFieldArr } = useWeatherParamsFieldConfig({
     selectedWeatherSource,
   });
@@ -65,13 +68,19 @@ export const WeatherForecastForm = (props: IProps) => {
       selectedPlace?.geometry?.location?.lat() || 42.3478,
       selectedPlace?.geometry?.location?.lng() || -71.0466,
     ];
+    setIsButtonLoading(true);
+    setGoogleSheetId(null);
+
     const res = await getWeatherForecastDataRequest(selectedWeatherSource, {
       coordinates: coordinates,
       timeSteps: null,
       forecastDays: data.forecastDays,
       units: data.units.label,
     });
-    console.log(res);
+    if (res && res.googleSheetId) {
+      setGoogleSheetId(res.googleSheetId);
+    }
+    setIsButtonLoading(false);
   };
 
   return (
@@ -81,19 +90,46 @@ export const WeatherForecastForm = (props: IProps) => {
         formSetValue: setValue,
         control: control,
       })}
-      <Button
-        variant="outlined"
-        color="primary"
+      <Box
         sx={{
-          "--variant-borderWidth": "2px",
-          borderRadius: 40,
-          borderColor: "primary.500",
-          mx: "auto",
+          display: "flex",
+          justifyContent: "center",
+          gap: 4,
+          mt: 2,
         }}
-        onClick={handleSubmit(onSubmit)}
       >
-        Go
-      </Button>
+        <Button
+          variant="outlined"
+          loading={isButtonLoading}
+          color="primary"
+          sx={{
+            "--variant-borderWidth": "2px",
+            borderRadius: 40,
+            borderColor: "primary.500",
+          }}
+          onClick={handleSubmit(onSubmit)}
+        >
+          Go
+        </Button>
+
+        {!isButtonLoading && googleSheetId && (
+          <Button
+            variant="outlined"
+            loading={isButtonLoading}
+            color="primary"
+            sx={{
+              "--variant-borderWidth": "2px",
+              borderRadius: 40,
+              borderColor: "primary.500",
+            }}
+            onClick={() =>
+              window.open(googleSheetBaseUrl + googleSheetId, "_blank")
+            }
+          >
+            Read
+          </Button>
+        )}
+      </Box>
     </>
   );
 };

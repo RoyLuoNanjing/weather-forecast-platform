@@ -18,9 +18,9 @@ const sheets = google.sheets({ version: "v4", auth });
 
 export async function createGoogleSheet() {
   try {
-    // Step 1: 创建一个新的Google Sheets文档
+    // Step 1: Create a google sheet
     const fileMetadata = {
-      name: "New Google Sheet", // 你可以根据需要自定义文档名称
+      name: "New Google Sheet",
       mimeType: "application/vnd.google-apps.spreadsheet",
     };
 
@@ -31,11 +31,11 @@ export async function createGoogleSheet() {
 
     const newSpreadsheetId = createResponse.data.id;
 
-    // Step 2: 设置文件为公开
+    // Step 2: set up the permission
     if (newSpreadsheetId) {
       const permission = {
-        type: "anyone", // 允许任何人访问
-        role: "reader", // 只读权限，你可以改为'writer'允许编辑
+        type: "anyone", // allow everybody to visit
+        role: "writer", // change to "reader" for read only
       };
 
       try {

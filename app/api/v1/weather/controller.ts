@@ -50,7 +50,6 @@ export async function getWeatherForecastDataController(
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
