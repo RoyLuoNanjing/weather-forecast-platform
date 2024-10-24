@@ -9,25 +9,25 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.elysium-energy.com/"),
+  metadataBase: new URL("https://www.baidu-energy.com/"),
   title: {
-    default: "Elysium Energy",
-    template: "%s - Elysium Energy",
+    default: "Weather Forecast",
+    template: "%s - Weather Forecast",
   },
-  description: "Advancing hydrogen possibilities with Elysium Energy.",
+  description: "Weather Forecast",
   icons: {
     icon: "/next.svg",
   },
   openGraph: {
-    title: "Elysium Energy",
-    description: "Advancing hydrogen possibilities with Elysium Energy.",
-    url: "https://www.elysium-energy.com/",
+    title: "Weather Forecast",
+    description: "Weather Forecast",
+    url: "https://www.baidu.com",
     images: [
       {
-        url: "/elysium-energy-logo.png",
+        url: "/next.svg",
         width: 1200,
         height: 630,
-        alt: "Elysium Energy Logo",
+        alt: "Weather Forecast",
       },
     ],
   },
