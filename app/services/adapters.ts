@@ -4,6 +4,7 @@ import { weatherSourcesConfigMap } from "../lib/config";
 interface IEssentialAdapterParams {
   coordinates: [number, number];
   forecastDays: number;
+  units: string;
 }
 
 export function selectedApiAdapter(source: IWeatherSources, data: any) {
@@ -20,7 +21,6 @@ export function selectedApiAdapter(source: IWeatherSources, data: any) {
 interface ITomorrowAdapterParams extends IEssentialAdapterParams {
   timeSteps: number | null;
   fields: string[];
-  units: string;
 }
 function tomorrowAdapter(params: ITomorrowAdapterParams) {
   const source = "tomorrow";
@@ -41,12 +41,12 @@ function weatherApiAdapter(params: IEssentialAdapterParams) {
   return {
     q: params.coordinates.toString(),
     days: params.forecastDays.toString(),
+    units: params.units,
   };
 }
 
 interface IOpenMeteoAdapterParams extends IEssentialAdapterParams {
   fields: string[];
-  units: string;
 }
 function openMeteoAdapter(params: IOpenMeteoAdapterParams) {
   const source = "openMeteo";

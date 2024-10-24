@@ -24,6 +24,7 @@ export async function fetchWeatherData(props: IFetchWeatherData) {
     });
 
     const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching weather data:", error);
   }
