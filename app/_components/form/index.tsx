@@ -71,15 +71,20 @@ export const WeatherForecastForm = (props: IProps) => {
     setIsButtonLoading(true);
     setGoogleSheetId(null);
 
-    const res = await getWeatherForecastDataRequest(selectedWeatherSource, {
-      coordinates: coordinates,
-      timeSteps: null,
-      forecastDays: data.forecastDays,
-      units: data.units.label,
-    });
-    if (res && res.googleSheetId) {
-      setGoogleSheetId(res.googleSheetId);
+    try {
+      const res = await getWeatherForecastDataRequest(selectedWeatherSource, {
+        coordinates: coordinates,
+        timeSteps: null,
+        forecastDays: data.forecastDays,
+        units: data.units.label,
+      });
+      if (res && res.googleSheetId) {
+        setGoogleSheetId(res.googleSheetId);
+      }
+    } catch (error) {
+      console.log(error);
     }
+
     setIsButtonLoading(false);
   };
 
