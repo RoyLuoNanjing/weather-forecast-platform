@@ -1,49 +1,46 @@
 import { weatherSourcesConfigMap } from "@/app/lib/config";
 import { NextRequest, NextResponse } from "next/server";
-import { appendToGoogleSheet } from "./googleSheetService";
+import { appendToGoogleSheet, createGoogleSheet } from "./googleSheetService";
+import { fetchWeatherData } from "./weatherService";
 
 export async function getWeatherForecastDataController(
   req: NextRequest,
   _res: NextResponse
 ) {
-  const data: any = req.nextUrl.searchParams;
-  const weatherSource = data.get("source");
+  const params: any = req.nextUrl.searchParams;
+  const weatherSource = params.get("source");
+  params.delete("source"); // we don't need this param to be sent to api
 
-  data.delete("source"); // we don't need this to be sent to api
   const apiUrl = weatherSourcesConfigMap[weatherSource].apiUrl;
+  /* Step 1. Create a google sheet */
+  const newGoogleSheetId = await createGoogleSheet();
 
-  const paramsForWeatherApi = data;
+  /* Step 2. Fetch the data */
+  const rawWeatherData = await fetchWeatherData({
+    apiUrl,
+    params,
+    weatherSource,
+  });
+  /* Step 3. Process the data */
 
-  const customizedHeaders: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-  const apiKey = weatherSourcesConfigMap[weatherSource].apiKey;
-  if (apiKey) {
-    customizedHeaders[apiKey.name] = apiKey.key;
+  /* Step 4. Append to the google sheet based on the sheet id */
+  if (newGoogleSheetId) {
+    await appendToGoogleSheet({ googleSheetId: newGoogleSheetId });
   }
 
-  await appendToGoogleSheet();
-
-  try {
-    const response = await fetch(`${apiUrl}?${paramsForWeatherApi}`, {
-      method: "GET",
-      headers: customizedHeaders,
-    });
-
-    const data = await response.json();
-    return NextResponse.json(
-      { body: data },
-      {
-        status: response.status,
-      }
-    );
-  } catch (error) {
-    console.error("Error fetching weather data:", error);
-    return NextResponse.json(
-      { body: "Bad request" },
-      {
-        status: 500,
-      }
-    );
-  }
+  //  try {
+  //   return NextResponse.json(
+  //     { body: data },
+  //     {
+  //       status: response.status,
+  //     }
+  //   );
+  //  } catch (error) {
+  //   return NextResponse.json(
+  //     { body: "Bad request" },
+  //     {
+  //       status: 500,
+  //     }
+  //   );
+  //  }
 }
