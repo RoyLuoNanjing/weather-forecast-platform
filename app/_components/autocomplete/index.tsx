@@ -81,7 +81,6 @@ export const MapWithAutocomplete = (props: IProps) => {
         options={{ componentRestrictions: { country: "uk" } }}
       >
         <FormControl>
-          <FormLabel>Search address</FormLabel>
           <Input
             type="text"
             placeholder="e.g. 141 mountain view..."
@@ -107,7 +106,7 @@ export const MapWithAutocomplete = (props: IProps) => {
                 />
               </IconButton>
             }
-            sx={[{ minWidth: 400 }]}
+            sx={[{ minWidth: 400, mb: 2 }]}
           />
         </FormControl>
       </Autocomplete>
