@@ -9,7 +9,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.baidu-energy.com/"),
+  metadataBase: new URL("https://www.baidu.com/"),
   title: {
     default: "Weather Forecast",
     template: "%s - Weather Forecast",
