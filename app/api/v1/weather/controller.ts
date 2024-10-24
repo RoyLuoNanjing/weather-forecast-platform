@@ -2,6 +2,7 @@ import { weatherSourcesConfigMap } from "@/app/lib/config";
 import { NextRequest, NextResponse } from "next/server";
 import { appendToGoogleSheet, createGoogleSheet } from "./googleSheetService";
 import { fetchWeatherData } from "./weatherService";
+import { processWeatherData } from "@/app/services/dataProcessors";
 
 export async function getWeatherForecastDataController(
   req: NextRequest,
@@ -9,38 +10,47 @@ export async function getWeatherForecastDataController(
 ) {
   const params: any = req.nextUrl.searchParams;
   const weatherSource = params.get("source");
+
   params.delete("source"); // we don't need this param to be sent to api
 
   const apiUrl = weatherSourcesConfigMap[weatherSource].apiUrl;
-  /* Step 1. Create a google sheet */
-  const newGoogleSheetId = await createGoogleSheet();
 
-  /* Step 2. Fetch the raw data from the selected weather source*/
-  const rawWeatherData = await fetchWeatherData({
-    apiUrl,
-    params,
-    weatherSource,
-  });
-  /* Step 3. Process the data */
+  try {
+    /* Step 1. Create a google sheet */
+    const newGoogleSheetId = await createGoogleSheet();
 
-  /* Step 4. Append to the google sheet based on the sheet id */
-  if (newGoogleSheetId) {
-    await appendToGoogleSheet({ googleSheetId: newGoogleSheetId });
+    /* Step 2. Fetch the raw data from the selected weather source*/
+    const rawWeatherData = await fetchWeatherData({
+      apiUrl,
+      params,
+      weatherSource,
+    });
+    /* Step 3. Process the data */
+    const processedWeatherData = processWeatherData(
+      weatherSource,
+      rawWeatherData,
+      params
+    );
+
+    /* Step 4. Append to the google sheet based on the sheet id */
+    if (newGoogleSheetId) {
+      await appendToGoogleSheet({
+        googleSheetId: newGoogleSheetId,
+        values: processedWeatherData,
+      });
+    }
+    return NextResponse.json(
+      { googleSheetId: newGoogleSheetId },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    let errorMessage = "An error occurred while processing your request.";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
-
-  //  try {
-  //   return NextResponse.json(
-  //     { body: data },
-  //     {
-  //       status: response.status,
-  //     }
-  //   );
-  //  } catch (error) {
-  //   return NextResponse.json(
-  //     { body: "Bad request" },
-  //     {
-  //       status: 500,
-  //     }
-  //   );
-  //  }
 }

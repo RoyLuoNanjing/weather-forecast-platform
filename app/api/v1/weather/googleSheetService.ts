@@ -60,18 +60,13 @@ export async function createGoogleSheet() {
 
 interface IGoogleSheetID {
   googleSheetId: string;
+  values: string[][];
 }
 export async function appendToGoogleSheet(props: IGoogleSheetID) {
-  const { googleSheetId } = props;
+  const { googleSheetId, values } = props;
 
   try {
     // Step 3: 插入数据到 Google Sheet
-    const values = [
-      ["Name", "Age", "City"],
-      ["John Doe", "30", "New York"],
-      ["Jane Smith", "25", "San Francisco"],
-    ];
-
     const resource = {
       values,
     };

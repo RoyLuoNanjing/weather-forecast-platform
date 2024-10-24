@@ -69,7 +69,7 @@ export const WeatherForecastForm = (props: IProps) => {
       coordinates: coordinates,
       timeSteps: null,
       forecastDays: data.forecastDays,
-      units: data.units,
+      units: data.units.label,
     });
     console.log(res);
   };
