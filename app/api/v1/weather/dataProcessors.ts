@@ -1,3 +1,16 @@
+import { IWeatherSources } from "@/types";
+
+export function processWeatherData(source: IWeatherSources, data: any) {
+  switch (source) {
+    case "tomorrow":
+      return processTomorrowData(data);
+    case "weatherApi":
+      return processWeatherApiData(data);
+    default:
+      return processOpenMeteoData(data);
+  }
+}
+
 export function processTomorrowData(data: any) {
   // 处理 tomorrow 系统的返回数据
   return {
