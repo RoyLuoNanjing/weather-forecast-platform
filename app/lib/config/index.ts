@@ -37,6 +37,7 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
     options: [
       { temperature: "temperature_2m" },
       { windSpeed: "wind_speed_10m" },
+      { humidity: "relative_humidity_2m" },
     ],
   },
 ];
