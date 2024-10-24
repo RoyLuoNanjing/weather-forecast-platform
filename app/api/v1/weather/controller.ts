@@ -15,7 +15,7 @@ export async function getWeatherForecastDataController(
   /* Step 1. Create a google sheet */
   const newGoogleSheetId = await createGoogleSheet();
 
-  /* Step 2. Fetch the data */
+  /* Step 2. Fetch the raw data from the selected weather source*/
   const rawWeatherData = await fetchWeatherData({
     apiUrl,
     params,
