@@ -56,7 +56,7 @@ export async function createGoogleSheet() {
 
     console.log(`Created new Google Sheet with ID: ${newSpreadsheetId}`);
   } catch (error) {
-    console.error("Error creating or appending to Google Sheet:", error);
+    console.error("Error creating a Google Sheet:", error);
     throw error;
   }
 }
@@ -88,7 +88,7 @@ export async function appendToGoogleSheet(props: IGoogleSheetID) {
       `Data inserted successfully into Google Sheet with ID: ${googleSheetId}`
     );
   } catch (error) {
-    console.error("Error creating or appending to Google Sheet:", error);
+    console.error("Error appending to Google Sheet:", error);
     throw error;
   }
 }
