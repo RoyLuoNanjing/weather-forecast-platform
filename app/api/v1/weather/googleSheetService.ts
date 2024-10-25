@@ -1,6 +1,7 @@
 import { googleSheetApiCredentials } from "@/app/lib/constants";
 import { google } from "googleapis";
 
+console.log(googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n"));
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: googleSheetApiCredentials.clientEmail,
