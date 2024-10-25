@@ -5,7 +5,7 @@ console.log(googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n"));
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: googleSheetApiCredentials.clientEmail,
-    private_key: googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n"),
+    private_key: googleSheetApiCredentials.privateKey,
   },
   scopes: [
     "https://www.googleapis.com/auth/spreadsheets",
