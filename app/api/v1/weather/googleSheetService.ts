@@ -1,13 +1,10 @@
 import { googleSheetApiCredentials } from "@/app/lib/constants";
 import { google } from "googleapis";
 
-const privateKey = googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n"); // local
-
-console.log(privateKey);
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: googleSheetApiCredentials.clientEmail,
-    private_key: privateKey,
+    private_key: googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n"),
   },
   scopes: [
     "https://www.googleapis.com/auth/spreadsheets",
