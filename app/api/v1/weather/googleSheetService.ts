@@ -1,9 +1,7 @@
 import { googleSheetApiCredentials } from "@/app/lib/constants";
 import { google } from "googleapis";
 
-const privateKey = googleSheetApiCredentials.privateKey?.includes("\\n")
-  ? googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n") // local
-  : googleSheetApiCredentials.privateKey; // vercel
+const privateKey = googleSheetApiCredentials.privateKey?.replace(/\\n/g, "\n"); // local
 
 console.log(privateKey);
 const auth = new google.auth.GoogleAuth({
