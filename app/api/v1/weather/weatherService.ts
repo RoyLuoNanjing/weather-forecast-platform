@@ -1,5 +1,4 @@
 import { weatherSourcesConfigMap } from "@/app/lib/config";
-import { NextResponse } from "next/server";
 
 interface IFetchWeatherData {
   apiUrl: string;
