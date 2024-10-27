@@ -25,7 +25,7 @@ export const useWeatherParamsFieldConfig = (props: IProps) => {
     },
     {
       name: "units",
-      label: "Units",
+      label: "Temperature Unit",
       type: "string",
       component: "select",
       options: weatherUnitOptions,
