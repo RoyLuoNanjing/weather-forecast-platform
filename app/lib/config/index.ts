@@ -15,7 +15,7 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
   {
     name: "tomorrow",
     label: "Tomorrow",
-    maxForecastDays: 2,
+    maxForecastDays: 5,
     apiUrl: "https://api.tomorrow.io/v4/timelines",
     apiKey: { name: "apiKey", key: tomorrowWeatherApiKey },
     timeSteps: "1h",
@@ -31,7 +31,7 @@ export const weatherSourcesConfigList: WeatherSourceConfig[] = [
   {
     name: "openMeteo",
     label: "Open Meteo",
-    maxForecastDays: 7,
+    maxForecastDays: 16,
     apiUrl: "https://api.open-meteo.com/v1/forecast",
     apiKey: null,
     options: [
