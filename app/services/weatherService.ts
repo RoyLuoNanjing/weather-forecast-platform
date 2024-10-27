@@ -5,10 +5,11 @@ export async function getWeatherForecastDataRequest(
   source: IWeatherSources,
   data: any
 ) {
+  //Get formatted params from the adapter  based on the selection
   const customizedParams = selectedApiAdapter(source, data);
   const finalParams = {
     ...customizedParams,
-    source: source,
+    source: source, // need to pass the source name to the backend as well
   };
 
   try {
@@ -24,8 +25,8 @@ export async function getWeatherForecastDataRequest(
       throw new Error(`Failed to fetch weather data: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    const result = await response.json();
+    return result;
   } catch (error) {
     console.error("Error fetching weather data:", error);
     throw error;

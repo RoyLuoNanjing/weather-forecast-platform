@@ -37,7 +37,6 @@ export async function createGoogleSheet() {
         type: "anyone", // allow everybody to visit
         role: "writer", // change to "reader" for read only
       };
-
       try {
         await drive.permissions.create({
           fileId: newSpreadsheetId,
@@ -50,7 +49,6 @@ export async function createGoogleSheet() {
         throw error;
       }
     }
-
     console.log(`Created new Google Sheet with ID: ${newSpreadsheetId}`);
   } catch (error) {
     console.error("Error creating a Google Sheet:", error);
@@ -66,13 +64,12 @@ export async function appendToGoogleSheet(props: IGoogleSheetID) {
   const { googleSheetId, values } = props;
 
   try {
-    // Step 3: 插入数据到 Google Sheet
     const resource = {
       values,
     };
 
-    const range = "Sheet1!A1"; // 指定插入数据的范围
-    const valueInputOption = "RAW"; // 或者使用 'USER_ENTERED' 让Google Sheets根据输入推断类型
+    const range = "Sheet1!A1";
+    const valueInputOption = "RAW";
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: googleSheetId,

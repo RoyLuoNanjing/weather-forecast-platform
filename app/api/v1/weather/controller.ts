@@ -13,26 +13,27 @@ export async function getWeatherForecastDataController(
 
   params.delete("source"); // we don't need this param to be sent to api
 
-  const apiUrl = weatherSourcesConfigMap[weatherSource].apiUrl;
+  const apiUrl = weatherSourcesConfigMap[weatherSource].apiUrl; //get api url from the config
 
   try {
-    /* Step 1. Create a google sheet */
-    const newGoogleSheetId = await createGoogleSheet();
-
-    /* Step 2. Fetch the raw data from the selected weather source*/
+    /* Step 1. Fetch the raw data from the selected weather source*/
     const rawWeatherData = await fetchWeatherData({
       apiUrl,
       params,
       weatherSource,
     });
-    /* Step 3. Process the data */
+
+    /* Step 2. Process the data */
     const processedWeatherData = processWeatherData(
       weatherSource,
       rawWeatherData,
       params
     );
 
-    /* Step 4. Append to the google sheet based on the sheet id */
+    /* Step 3. Create a google sheet */
+    const newGoogleSheetId = await createGoogleSheet();
+
+    /* Step 4. Append data to the google sheet based on the sheet id */
     if (newGoogleSheetId) {
       await appendToGoogleSheet({
         googleSheetId: newGoogleSheetId,

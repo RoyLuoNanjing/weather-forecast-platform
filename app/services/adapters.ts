@@ -24,6 +24,7 @@ interface ITomorrowAdapterParams extends IEssentialAdapterParams {
 }
 function tomorrowAdapter(params: ITomorrowAdapterParams) {
   const source = "tomorrow";
+  //get the fields strings from the config file using the source name
   const fields = weatherSourcesConfigMap[source].options?.map(
     (option: any) => Object.values(option)[0]
   );
